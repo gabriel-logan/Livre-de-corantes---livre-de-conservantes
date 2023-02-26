@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silde Projeto</title>
+    <style>
+        body {
+            background: #1b1d20;
+            margin: 0;
+        }
+        
+        #geral {
+            max-width: 300px;
+            margin: auto;
+            position: relative;
+        }
+        
+        #geral .perfil {
+            width: 50%;
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            z-index: 1;
+        }
+        
+        #geral .perfil .img-perfil img {
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            margin-right: 5px;
+        }
+        
+        #geral .perfil .infos-perfil {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+        
+        #geral .perfil .infos-perfil h3 {
+            margin-top: 10px;
+            margin-bottom: 2px;
+            font-weight: 500;
+            color: #fff;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 15px;
+            text-shadow: 1px 1px 1px black;
+        }
+        
+        #geral .perfil .infos-perfil p {
+            margin: 0;
+            font-weight: 200;
+            color: #fff;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 10px;
+            text-shadow: 1px 1px 1px black;
+        }
+        
+        #geral .slide {
+            max-width: 300px;
+            margin: 0 auto;
+            display: -ms-grid;
+            display: grid;
+            -webkit-box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 20px 2px rgba(0, 0, 0, 0.4);
+        }
+        
+        #geral .slide .slide-items {
+            position: relative;
+            -ms-grid-row: 1;
+            -ms-grid-column: 1;
+            grid-area: 1/1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        #geral .slide .slide-items img {
+            max-width: 100%;
+            height: 600px;
+            display: block;
+        }
+        
+        #geral .slide .slide-items video {
+            max-width: 100%;
+            height: 600px;
+            display: block;
+        }
+        
+        #geral .slide .slide-items>* {
+            position: absolute;
+            top: 0px;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        #geral .slide .slide-items>.active {
+            position: relative;
+            opacity: 1;
+            pointer-events: initial;
+        }
+        
+        #geral .slide .slide-nav {
+            -ms-grid-row: 1;
+            -ms-grid-column: 1;
+            grid-area: 1/1;
+            z-index: 1;
+            display: -ms-grid;
+            display: grid;
+            -ms-grid-columns: 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            -ms-grid-rows: auto 1fr;
+            grid-template-rows: auto 1fr;
+        }
+        
+        #geral .slide .slide-nav button {
+            -webkit-appearance: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            opacity: 0;
+        }
+        
+        #geral .slide .slide-nav .slide-thumb {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-grid-column: 1;
+            -ms-grid-column-span: 3;
+            grid-column: 1 / 4;
+        }
+        
+        #geral .slide .slide-nav span {
+            -webkit-box-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            display: block;
+            height: 3px;
+            background: rgba(0, 0, 0, 0.4);
+            margin: 5px;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        #geral .slide .slide-nav span.active::after {
+            content: '';
+            display: block;
+            height: inherit;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 3px;
+            -webkit-transform: translateX(-100%);
+            transform: translateX(-100%);
+            -webkit-animation: var(--afterSpanAnim, thumb 5s forwards linear);
+            animation: var(--afterSpanAnim, thumb 5s forwards linear);
+        }
+        
+        #geral .slide .button-nav {
+            position: absolute;
+            bottom: 40px;
+            z-index: 2;
+            width: 100%;
+            text-align: center;
+        }
+        
+        #geral .slide .button-nav a button {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 15px;
+            background-color: #1b1d20b6;
+            font-size: .5rem;
+            padding: 7px;
+            letter-spacing: 1px;
+            font-family: Roboto, Arial, sans-serif;
+            text-shadow: 1px 1px 1px black;
+            cursor: pointer;
+        }
+        
+        #geral .slide .button-nav a button:hover {
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+        
+        #geral .slide .button-nav a button:active {
+            -webkit-transform: scale(1.09);
+            transform: scale(1.09);
+        }
+        
+        @-webkit-keyframes thumb {
+            to {
+                -webkit-transform: initial;
+                transform: initial;
+            }
+        }
+        
+        @keyframes thumb {
+            to {
+                -webkit-transform: initial;
+                transform: initial;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="geral">
+        <div class="perfil">
+            <div class="img-perfil">
+                <img src="./img/blank-profile-picture-973460__480.png" alt="Imagem de perfil">
+            </div>
+            <div class="infos-perfil">
+                <h3>Meu nome</h3>
+            </div>
+        </div>
+        <div data-slide="slide" class="slide">
+            <div class="slide-items">
+                <!-- Para adicionar imagens, precisa apenas colocar a tag IMG e a fonte src -->
+                <img src="./img/images.png" alt="">
+                <img src="./img/300X600.jpg" alt="" srcset="">
+                <!-- Adiciona a tag video, a class='EX: video2, video3 etc' e a src= fonte do video -->
+                <video class="video1" src="./img/whopper.mp4"></video>
+                <video class="video2" src="./img/propagand.mp4"></video>
+                <img src="./img/images.jpg" alt="" srcset="">
+            </div>
+            <nav class="slide-nav">
+                <div class="slide-thumb"></div>
+                <button class="slide-prev">Anterior</button>
+                <button class="slide-next">Próximo</button>
+            </nav>
+            <nav class="button-nav">
+                <a href="https://encurtador.com.br/iHNZ0" target="_blank"><button class="click-link">VISIT MY PORTFOLIO</button></a>
+            </nav>
+        </div>
+    </div>
+    <script>
+        class SlideStories {
+            constructor(id) {
+                this.slide = document.querySelector(`[data-slide="${id}"]`);
+                this.active = 0;
+                // Cria a variavel do video de acordo com a classe criada
+                this.video1 = document.querySelector('.video1');
+                this.video2 = document.querySelector('.video2');
+                this.init();
+            }
+            activeSlide(index) {
+                this.active = index;
+                this.items.forEach((item) => item.classList.remove('active'));
+                this.items[index].classList.add('active');
+                this.thumbItems.forEach((item) => item.classList.remove('active'));
+                this.thumbItems[index].classList.add('active');
+                if (this.items[index].classList.contains('active')) {
+                    if (this.items[index].tagName == this.video1.tagName) {
+                        // Inicia o video automaticamente ao ver o slide especifico
+                        // Copia o if abaixo e coloca os dados da variavel criada
+                        // obs: coloca os videos que não estarao em execução em pause
+                        if (this.items[index].classList.contains('video1')) {
+                            this.video1.currentTime = 0;
+                            this.video2.pause();
+                            this.video1.play();
+                        }
+                        if (this.items[index].classList.contains('video2')) {
+                            this.video2.currentTime = 0;
+                            this.video1.pause();
+                            this.video2.play();
+                        }
+                    } else {
+                        // Se não estiverem assistindo nenhum video, todos são pausados
+                        this.video2.pause();
+                        this.video1.pause();
+                    }
+                };
+                // modifica o tempo dos slides
+                if (this.items[index].tagName == 'VIDEO') {
+                    // Modifica o tempo dos videos de acordo com o tamanho do mesmo
+                    if (this.items[index].classList.contains('video1')) {
+                        this.autoSlide(this.video1.duration * 1050);
+                    }
+                    if (this.items[index].classList.contains('video2')) {
+                        this.autoSlide(this.video2.duration * 1050);
+                    }
+                } else {
+                    // Tempo padrão para fotos, em milisegundos
+                    this.autoSlide(5000)
+                }
+                return index
+            }
+
+            prev() {
+                if (this.active > 0) {
+                    this.activeSlide(this.active - 1);
+                } else {
+                    this.activeSlide(this.items.length - 1);
+                }
+            }
+
+            next() {
+                if (this.active < this.items.length - 1) {
+                    this.activeSlide(this.active + 1);
+
+                } else {
+                    // Reinicia o slide para o primeiro
+                    this.activeSlide(0)
+                }
+            }
+
+            addNavigation() {
+                const nextBtn = this.slide.querySelector('.slide-next');
+                const prevBtn = this.slide.querySelector('.slide-prev');
+                nextBtn.addEventListener('click', this.next);
+                prevBtn.addEventListener('click', this.prev);
+            }
+
+            addThumbItems() {
+                for (let index = 0; index < this.items.length; index++) {
+                    this.span = document.createElement('span');
+                    this.thumb.appendChild(this.span);
+                };
+                let spanSelect = document.querySelectorAll('span');
+                for (let index = 0; index < this.items.length; index++) {
+                    let afterSpanSelect = window.getComputedStyle(spanSelect[index], '::after');
+                    if (this.items[index].tagName == 'VIDEO') {
+                        // Define o tempo da animation feita com CSS
+                        // Utilizando a classe criada para diferenciar o tempo
+                        if (this.items[index].classList.contains('video1')) {
+                            spanSelect[index].style.setProperty('--afterSpanAnim', `thumb ${15}s forwards linear`)
+                        }
+                        if (this.items[index].classList.contains('video2')) {
+                            // o tempo do video é definido manualmente no animation
+                            spanSelect[index].style.setProperty('--afterSpanAnim', `thumb ${10}s forwards linear`)
+                        }
+                    }
+                }
+                this.thumbItems = Array.from(this.thumb.children);
+            }
+
+            autoSlide(tempo) {
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(this.next, tempo)
+            }
+
+            init() {
+                this.next = this.next.bind(this);
+                this.prev = this.prev.bind(this);
+                this.items = this.slide.querySelectorAll('.slide-items > *');
+                this.thumb = this.slide.querySelector('.slide-thumb');
+                this.addThumbItems();
+                this.activeSlide(0);
+                this.addNavigation();
+            }
+        }
+
+        const iniciaClass = new SlideStories('slide');
+    </script>
+</body>
+
+</html>
